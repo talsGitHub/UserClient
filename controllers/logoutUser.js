@@ -7,11 +7,10 @@ module.exports =  async(req, res) => {
     let redirect = false
 
     
-   
-
+    
     function checkLoggedIn() {
         return new Promise(function (resolve, reject) {
-            req.session.destroy()
+            
             try{
                 request({
                     headers: {
@@ -44,7 +43,7 @@ module.exports =  async(req, res) => {
                         }
                         else{
                             if (!err && res.statusCode == 200) {
-                                req.session.destroy();
+                                
                                 console.log(parsedBody.msg)
                                 resolve(parsedBody.msg);
                             }
@@ -67,18 +66,19 @@ module.exports =  async(req, res) => {
       }
     
       
-    /*result = ""
+    result = ""
     result = await checkLoggedIn();
+    console.log("RESULT: " +  result)
     if (result == true){
-        console.log(result)
+        
         return res.redirect('/dashboard')
         
     }
-    console.log("REsult: " + result)*/
-    req.session.destroy()
-    res.render('index', {
-        
-    })
+    else{
+        req.session.destroy()
+        return res.redirect('/')
+
+    }
     
 	 
 
