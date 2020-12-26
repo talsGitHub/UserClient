@@ -1,0 +1,108 @@
+@layout('layouts.app')
+
+
+@section('styles')
+   
+@endsection
+
+
+@section('content')
+
+ <!-- Page Content -->
+
+ 
+
+    <div class="jumbotron text-center">
+            <h1>Setup</h1> 
+
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#headingsModal" >Add headings</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Open modal for @fat</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+
+
+<div class="modal fade" id="headingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add the following heading labels</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form action="/user/setup" method="POST">
+       
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            
+            <input type="text" name="description" placeholder="description" class="form-control" required>
+          </div>
+        </div>
+       <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            
+            <input type="text" name="amount" placeholder="amount" class="form-control" required>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            
+            <input type="text" name="credit" placeholder="credit" class="form-control" required>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            
+            <input type="text" name="debit" placeholder="debit" class="form-control" required>
+          </div>
+        </div>
+        
+      
+        <div class="form-group my-4 text-center">
+          
+          <input type="submit" class="btn btn-primary" value="Save Headings"/>
+        </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+        
+       
+            
+       
+            
+</div>
+
+  <!-- /.container -->
+
+
+@endsection
+
+
+@section('scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    
+
+    <script>
+            $('#headingModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+            })
+</script>
+       
+   
+@endsection
+
