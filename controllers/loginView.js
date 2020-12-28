@@ -1,7 +1,11 @@
 
 module.exports =  async(req, res) => {
 
-	
-	res.render('login', {})
+	result = req.result
+	console.log("res: " + result)
+	res.render('login', {
+		result:result
+
+	})
 
 }
