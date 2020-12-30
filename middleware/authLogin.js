@@ -2,6 +2,7 @@ const localStorage = require('webstorage-node').localStorage;
 const request = require('request');
 //var session = require('client-sessions');
 var session = require('express-session')
+const loginViewController = require('../controllers/loginView');
 
 //let token = localStorage.getItem("token");
 let parsedName = ""
@@ -37,8 +38,7 @@ function checkLoggedIn(token) {
                     
 
                     if (!err && res.statusCode == 200) {
-                        //localStorage.setItem("name", name);
-                     //   localStorage.setItem("email", email);
+                     
                         resolve(true);
                     } else {
                         reject(parsedBody.msg);
@@ -66,7 +66,7 @@ function checkLoggedIn(token) {
 
 module.exports =  async(req, res, next) => {
 
-    let name = ""
+    
     let token = req.session.token
     
     if (!token){
@@ -83,8 +83,9 @@ module.exports =  async(req, res, next) => {
     console.log("auth result: " + result)
     if (result != true){
         req.session.error = result
-        console.log("ERO: " + req.session.error)
-        return res.redirect('/')
+        
+        //return res.redirect('/')
+        return loginViewController(req, res)
     }
 
 	next()

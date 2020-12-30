@@ -22,9 +22,9 @@ module.exports =  async(req, res) => {
                   },   function (err, res, body) {
                         
         
-                        console.log("ERR::::: " + body)
+                        
                         parsedBody = JSON.parse(body)
-                        console.log("Logout parse:: " + parsedBody.key)
+                       
                         
                         if(parsedBody.key == "error")
                         {
@@ -44,7 +44,7 @@ module.exports =  async(req, res) => {
                         else{
                             if (!err && res.statusCode == 200) {
                                 
-                                console.log(parsedBody.msg)
+                                
                                 resolve(parsedBody.msg);
                             }
                             else{
@@ -58,7 +58,7 @@ module.exports =  async(req, res) => {
                   });
             }
             catch(e){
-                    console.log("error with logout " + e)
+                    console.log("Error with logout process " + e)
             }
 
 
@@ -68,7 +68,7 @@ module.exports =  async(req, res) => {
       
     result = ""
     result = await checkLoggedIn();
-    console.log("RESULT: " +  result)
+    //console.log("RESULT: " +  result)             //DEBUG
     if (result == true){
         
         return res.redirect('/dashboard')

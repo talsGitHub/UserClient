@@ -1,11 +1,8 @@
 const querystring = require('querystring');
 const { curly } = require('node-libcurl');
 const request = require('request');
-const localStorage = require('webstorage-node').localStorage;
 const homepageController = require('./homePage');
-const dashboardController = require('./dashboard');
 
-let parsedToken = ""
 
 function login(email, pwd, name, req, res) {
     return new Promise(function (resolve, reject) {
@@ -29,7 +26,7 @@ function login(email, pwd, name, req, res) {
                         
                             
                             parsedBody = JSON.parse(body)
-                            //parsedBody = JSON.parse(parsedBody)
+                            
                             
                             if(!parsedBody["key"])
                             {
@@ -41,7 +38,7 @@ function login(email, pwd, name, req, res) {
                             req.session.name = name
                             req.session.email = email
                             req.firstTime = true
-                            //return dashboardController(req, res)
+                            
                             return res.redirect('/dashboard')
                             
                             
@@ -110,21 +107,6 @@ module.exports =  async(req, res) => {
 
     }
 
-    /*console.log("success: " + success)
-   
-    if (success == true){
-        console.log("inside true: " + parsedToken)
-        req.session.token = parsedToken
-        req.session.name = name
-        req.session.email = email
-        return dashboardController(req, res)
-    }
-    else{
-
-        
-        
-    }*/
-    
 
     req.body = req.body
     req.result = result["msg"]

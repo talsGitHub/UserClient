@@ -8,9 +8,6 @@ let token = localStorage.getItem("token");
 
 module.exports =  async(req, res) => {
 
-    if (req.firstTime == true){
-        console.log("req: " + req.session.name )
-    }
 
    
     try{

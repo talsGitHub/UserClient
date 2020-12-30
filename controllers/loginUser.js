@@ -1,7 +1,7 @@
 
 const localStorage = require('webstorage-node').localStorage;
 const loginViewController = require('./loginView');
-//var session = require('client-sessions');
+
 
 
 module.exports =  async(req, res) => {
@@ -28,7 +28,7 @@ module.exports =  async(req, res) => {
 					
 						console.log("body: " + body)
 						parsedBody = JSON.parse(body)
-						//parsedBody = JSON.parse(parsedBody)
+						
 						
 						if(!parsedBody["key"])
 						{
@@ -38,26 +38,24 @@ module.exports =  async(req, res) => {
 						
 						
 						if(token == "Incorrect password"){
-							console.log("no such password")
+							//console.log("no such password")				//DEBUG
 							result = "Invalid Password"
-							//return res.redirect('/login/?result=' + result)
+							
 						}
 						else if(token == "No such user"){
-							console.log("no such user")
+							//console.log("no such user")					//DEBUG
 							result = "Invalid User"
-							//return res.redirect('/login/?result=' + result)
+							
 						}
 						else{
-							//localStorage.setItem("token", token);
 							req.session.token = token
-							//res.render('dashboard', {})
 							return res.redirect('/dashboard')
 						}
 						
 						
 				}
 
-				console.log("R: " + result)
+				
 				if(result){
 					req.result = result
 					return loginViewController(req, res);
@@ -68,7 +66,7 @@ module.exports =  async(req, res) => {
 		
 	}
 	catch(e){
-			console.log("error with login " + e)
+			console.log("Error with login process " + e)
 	}
 	 
 

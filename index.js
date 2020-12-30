@@ -46,7 +46,7 @@ const dashboardController = require('./controllers/dashboard');
 const loginUserController = require('./controllers/loginUser');
 const logoutUserController = require('./controllers/logoutUser');
 const loginViewController = require('./controllers/loginView');
-const setupController = require('./controllers/setup');
+
 
 
 
@@ -76,7 +76,7 @@ app.get('/', homepageController);
 app.get('/dashboard', authLogin, dashboardController);
 app.get('/login', loginViewController);
 app.get('/auth/logout', logoutUserController);
-app.get('/setup', authLogin, setupController);
+
 
 app.post('/auth/register', registerUserController);
 app.post('/auth/login', loginUserController);
