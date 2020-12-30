@@ -11,20 +11,21 @@
  <!-- Page Content -->
 
     <div class="jumbotron text-center">
-            <h1>Finance</h1> 
+            <h1>User Login Demo</h1> 
 
             {{error}}
+        
             
-            <p>Organise your personal finance with ease</p> 
+            <p>Demo for server and client side user login using API</p> 
         <div class="container">
             <div class="row">
-                <div class="col-sm-8">Some more info or an image</div>
+                <div class="col-sm-8"><a href="https://github.com/talsGitHub/UserAPI/blob/main/README.md" target="_blank"> Learn more in the ReadMe file by clicking here</a></div>
                 <div class="col-sm-4">
       <form action="/auth/register" name="registerForm" method="POST" onsubmit="return validateForm()">
         <div class="control-group">
           <div class="form-group floating-label-form-group controls">
            
-            <input type="text" name="name" value="{{ data.username || '' }}" placeholder="Username" class="form-control" required>
+            <input type="text" name="name" value="{{ data.name || '' }}" placeholder="Username" class="form-control" required>
           </div>
         </div>
         <div class="control-group">
@@ -50,7 +51,9 @@
         <div class="form-group my-4 text-center">
           
           <input type="submit" class="btn btn-primary" value="Register Now"/>
+             
         </div>
+        <a style="color:red;">{{result}}</a>
       </form>
                 
                 </div>

@@ -2,51 +2,59 @@ const querystring = require('querystring');
 const { curly } = require('node-libcurl');
 const request = require('request');
 const localStorage = require('webstorage-node').localStorage;
+const homepageController = require('./homePage');
+const dashboardController = require('./dashboard');
 
 let parsedToken = ""
 
-function login(email, pwd, name) {
+function login(email, pwd, name, req, res) {
     return new Promise(function (resolve, reject) {
-                    console.log("login: " + email + " : " + pwd)
-
-                   //request login endpoint
-                   try{
-                    var request = require('request'),
-                        username = email,
-                        password = pwd,
-                        url = "http://" + username + ":" + password + "@localhost:3000/users/login";
+        try{
+            var request = require('request'),
+                username = email,
+                password = pwd,
+                url = "http://" + username + ":" + password + "@localhost:3000/users/login";
     
-                    request(
-                        {
-                            url : url
-                        },
-                        function (error, response, body) {
-                            if(error)
-                            {
-                                console.log("E: " + error)
-                            }
-                            else{
-                                    
-                                    
-                                    parsedBody = JSON.parse(body)
-                                    //console.log("AP::" + parsedBody["msg"])
-                                    token = parsedBody["msg"]
-                                    
-                                    parsedToken = token
-                                    
-                                   
-                                    resolve(true);
-                                    
-                                   
-                            }
+            request(
+                {
+                    url : url
+                },
+                function (error, response, body) {
+                    if(error)
+                    {
+                        console.log("error: " + error)
+                        res.render('/dashboard', {})
+                    }
+                    else{
+                        
                             
-                        }
-                    );
+                            parsedBody = JSON.parse(body)
+                            //parsedBody = JSON.parse(parsedBody)
+                            
+                            if(!parsedBody["key"])
+                            {
+                                parsedBody = JSON.parse(parsedBody)
+                            }
+                            token = parsedBody["msg"]
+                            
+                            req.session.token = token
+                            req.session.name = name
+                            req.session.email = email
+                            req.firstTime = true
+                            //return dashboardController(req, res)
+                            return res.redirect('/dashboard')
+                            
+                            
+                            
+                    }
+    
                 }
-                catch(e){
-                        console.log("error with login " + e)
-                        reject(false);
-                }
+            );
+            
+        }
+        catch(e){
+                console.log("error with login " + e)
+        }
 
 
 
@@ -69,7 +77,7 @@ module.exports =  async(req, res) => {
     confirmPassword = req.body.confirmPassword
   
     name = name.replace(/ /g, "%20")
-    console.log(name + " : " + email + " : " + password + " : " + confirmPassword)
+
     //request register endpoint
     try{
         url = 'http://localhost:3000/users/signup?name=' + name + '&email=' + email + '&password=' + password + '&confirmPassword=' + confirmPassword
@@ -81,18 +89,17 @@ module.exports =  async(req, res) => {
 
         result = JSON.parse(data)
     
-        console.log("RESS: " + result["msg"])
-        console.log("key: " + result["key"])
         if(result["key"] == "token")
         {
             
-            success = await login(email, password, name)
+            success = await login(email, password, name, req, res)
+           
             
  
         }
         else
         {
-            console.log("error with register: " + result["msg"])
+            console.log("Error registering the account: " + result["msg"])
         }
         
 
@@ -103,23 +110,25 @@ module.exports =  async(req, res) => {
 
     }
 
+    /*console.log("success: " + success)
    
     if (success == true){
+        console.log("inside true: " + parsedToken)
         req.session.token = parsedToken
         req.session.name = name
         req.session.email = email
-        res.render('dashboard', {
-            name: name,
-            email: email
-        })
+        return dashboardController(req, res)
     }
     else{
-        res.render('index', {
 
-        })
-    }
+        
+        
+    }*/
     
 
+    req.body = req.body
+    req.result = result["msg"]
 
+    return homepageController(req, res)
 
 }
